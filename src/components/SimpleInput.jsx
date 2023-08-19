@@ -4,30 +4,19 @@ const SimpleInput = (props) => {
   // in the hook we will happ the function that will be to do validation inside the hook
   // this helps make the hook re-usable for example input
   const {
-    enteredValue: inputNameValue,
-    hasError: inputNameHasError,
-    inputNameHandler: inputChangeHandler,
-    inputNameBlurHandler: inputBlurHandler,
+    inputNameValue: enteredValue,
+    isValid: inputNameIsValid,
+    inputNameHasError: hasError,
+    valueChangeHandler: inputNameHandler,
+    inputOnBlurHandler: inputNameOnBlurHandler,
   } = useInput((value) => {
     value.trim() !== "";
   });
-  // used to update our state with new state
-  const [enteredName, setEnteredName] = useState("");
-  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
-  // onchange for input
 
-  const enteredNameIsValid = enteredName.trim() != "";
-  const nameInputIsValid = !enteredNameIsValid && enteredNameTouched;
-  const nameInputHandler = (e) => {
-    setEnteredName(e.target.value);
-  };
-  const nameInputOnBlur = (e) => {
-    setEnteredNameTouched(true);
-  };
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    setEnteredNameTouched(true);
-    if (!enteredNameIsValid) {
+    // setEnteredNameTouched(true);
+    if (!inputNameIsValid) {
       return;
     }
   };
@@ -39,12 +28,12 @@ const SimpleInput = (props) => {
           <label htmlFor="name">Your Name</label>
           <input
             className=""
-            onChange={nameInputHandler}
+            onChange={inputNameHandler}
             type="text"
             id="name"
-            onBlur={nameInputOnBlur}
+            onBlur={inputNameOnBlurHandler}
           />
-          {!nameInputIsValid && (
+          {!inputNameIsValid && (
             <p className="text-red-500">Input can not be empty</p>
           )}
         </div>
