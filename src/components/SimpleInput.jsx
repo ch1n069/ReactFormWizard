@@ -6,7 +6,9 @@ const SimpleInput = (props) => {
     hasError: inputNameHasError,
     inputNameHandler: inputChangeHandler,
     inputNameBlurHandler: inputBlurHandler,
-  } = useInput();
+  } = useInput((value) => {
+    value.trim() !== "";
+  });
   // used to update our state with new state
   const [enteredName, setEnteredName] = useState("");
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
