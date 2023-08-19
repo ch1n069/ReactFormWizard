@@ -4,9 +4,10 @@ const SimpleInput = (props) => {
   // in the hook we will happ the function that will be to do validation inside the hook
   // this helps make the hook re-usable for example input
   const {
-    inputNameValue: enteredValue,
+    enteredValue: enteredName,
     isValid: inputNameIsValid,
-    inputNameHasError: hasError,
+    hasError: nameInputHasError,
+    reset: resetInputName,
     valueChangeHandler: inputNameHandler,
     inputOnBlurHandler: inputNameOnBlurHandler,
   } = useInput((value) => {
@@ -16,9 +17,11 @@ const SimpleInput = (props) => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
     // setEnteredNameTouched(true);
-    if (!inputNameIsValid) {
+    if (!enteredName) {
       return;
     }
+    console.log("entered name is", enteredName);
+    resetInputName;
   };
 
   return (
@@ -33,7 +36,7 @@ const SimpleInput = (props) => {
             id="name"
             onBlur={inputNameOnBlurHandler}
           />
-          {!inputNameIsValid && (
+          {!nameInputHasError && (
             <p className="text-red-500">Input can not be empty</p>
           )}
         </div>
