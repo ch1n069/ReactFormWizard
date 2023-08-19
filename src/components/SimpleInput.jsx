@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 
 const SimpleInput = (props) => {
-  const [enteredName, setEnteredName] = useState();
+  // used to update our state with new state
+  const [enteredName, setEnteredName] = useState("");
+  const [enteredNameTouched, setEnteredNameTouched] = useState();
   // onchange for input
+
+  const enteredNameIsValid = enteredName.trim() != "";
   const nameInputHandler = (e) => {
     setEnteredName(e.target.value);
   };
+  const nameInputOnBlur = () => {};
   const formSubmitHandler = (e) => {
     e.preventDefault();
   };
