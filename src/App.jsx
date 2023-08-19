@@ -1,14 +1,18 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
+import "./App.css";
+import SimpleInput from "./components/SimpleInput";
 
 function App() {
+  const [count, setCount] = useState(0);
+
   return (
     <>
-      <div className="bg-yellow-500">
-        <h2 className="text-6xl">testing tailwind</h2>
+      <div className="">
+        <SimpleInput />
       </div>
-      {/* <SimpleInput /> */}
+      {/* <h2 className="text-6xl">testing tailwind</h2> */}
     </>
   );
 }
