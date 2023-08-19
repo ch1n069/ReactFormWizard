@@ -3,16 +3,23 @@ import React, { useState } from "react";
 const SimpleInput = (props) => {
   // used to update our state with new state
   const [enteredName, setEnteredName] = useState("");
-  const [enteredNameTouched, setEnteredNameTouched] = useState();
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
   // onchange for input
 
   const enteredNameIsValid = enteredName.trim() != "";
+  const nameInputIsValid = !enteredNameIsValid && enteredNameTouched;
   const nameInputHandler = (e) => {
     setEnteredName(e.target.value);
   };
-  const nameInputOnBlur = () => {};
+  const nameInputOnBlur = (e) => {
+    setEnteredNameTouched(true);
+  };
   const formSubmitHandler = (e) => {
     e.preventDefault();
+    setEnteredNameTouched(true);
+    if (!enteredNameIsValid) {
+      return;
+    }
   };
 
   return (
@@ -20,7 +27,16 @@ const SimpleInput = (props) => {
       <form onSubmit={formSubmitHandler} className="m-5 ">
         <div className="form-control">
           <label htmlFor="name">Your Name</label>
-          <input onChange={nameInputHandler} type="text" id="name" />
+          <input
+            className=""
+            onChange={nameInputHandler}
+            type="text"
+            id="name"
+            onBlur={nameInputOnBlur}
+          />
+          {!nameInputIsValid && (
+            <p className="text-red-500">Input can not be empty</p>
+          )}
         </div>
         <div className="form-actions">
           <button>Submit</button>
