@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import useInput from "./hooks/use-input";
 const SimpleInput = (props) => {
+  // in the hook we will happ the function that will be to do validation inside the hook
+  // this helps make the hook re-usable for example input
   const {
     enteredValue: inputNameValue,
     hasError: inputNameHasError,
