@@ -3,34 +3,36 @@ import useInput from "./hooks/use-input";
 const SimpleInput = (props) => {
   // in the hook we will happ the function that will be to do validation inside the hook
   // this helps make the hook re-usable for example input
-  const [enteredName, setEnteredName] = useState("");
-  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  const enteredNameIsValid = enteredName.trim() !== "";
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+  //
+  const {
+    enteredValue: enteredName,
+    hasError: nameHasError,
+    isValid: enteredNameIsValid,
+    reset: nameInputReset,
+    valueChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+  } = useInput((value) => value.trim() !== "");
+  let formIsValid = false;
 
-  const inputChangeHandler = (e) => {
-    setEnteredName(e.target.value);
-  };
-
-  const nameInputBlurHandler = (e) => {
-    setEnteredNameTouched(true);
-  };
-
+  if (enteredNameIsValid) {
+    formIsValid = true;
+  }
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    setEnteredNameTouched(true);
-    if (!enteredNameIsValid) {
-      return;
-    }
+    // setEnteredNameTouched(true);
+    // if (!enteredNameIsValid) {
+    //   return;
+    // }
 
     console.log("entered name", enteredName);
     // setEnteredNameTouched(true);
-    setEnteredName("");
-    setEnteredNameTouched(false);
+    // setEnteredName("");
+    // setEnteredNameTouched(false);
+    nameInputReset();
   };
 
-  const nameInputClasses = nameInputIsInvalid
+  const nameInputClasses = nameHasError
     ? "form-control invalid"
     : "form-control ";
 
@@ -41,12 +43,12 @@ const SimpleInput = (props) => {
           <label htmlFor="name">Your Name</label>
           <input
             className=""
-            onChange={inputChangeHandler}
+            onChange={nameChangeHandler}
             type="text"
             id="name"
-            onBlur={nameInputBlurHandler}
+            onBlur={nameBlurHandler}
           />
-          {nameInputIsInvalid && (
+          {nameHasError && (
             <p className="text-red-500 text-sm">Input field cannot be emtpy</p>
           )}
         </div>
