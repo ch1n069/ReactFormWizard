@@ -33,6 +33,7 @@ const BasicForm = (props) => {
         <div className="form-control">
           <label htmlFor="name">First Name</label>
           <input
+            value={firstNameValue}
             type="text"
             id="name"
             onChange={firstNameValueChangeHandler}
@@ -45,13 +46,14 @@ const BasicForm = (props) => {
         <div className="form-control">
           <label htmlFor="name">Last Name</label>
           <input
+            value={secondNameValue}
             type="text"
-            id="name"
+            id="last name"
             onChange={secondNameValueChangeHandler}
-            onBlur={secondNameValueChangeHandler}
+            onBlur={secondNameInputBlurHandler}
           />
           {secondNameHasError && (
-            <p className="text-red-500 text-sm">first name cannot be empty</p>
+            <p className="text-red-500 text-sm">Last name cannot be empty</p>
           )}
         </div>
       </div>
