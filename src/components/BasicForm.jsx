@@ -16,7 +16,16 @@ const BasicForm = (props) => {
     inputBlurHandler: secondNameInputBlurHandler,
     reset: secondNameReset,
   } = useInput((value) => value.trim() !== "");
-  const {} = useInput((value) => value.includes("@"));
+
+  // email hook
+  const {
+    enteredValue: emailValue,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlur: emailBlurHandler,
+    reset: emailReset,
+    valueIsValid: emailIsValid,
+  } = useInput((value) => value.includes("@"));
   let formIsValid = false;
   if (firstNameIsValid) {
     formIsValid = true;
@@ -24,8 +33,10 @@ const BasicForm = (props) => {
   const submitFormHandler = (e) => {
     e.preventDefault();
     console.log("first name", firstNameValue);
-    console.log("second name");
+    console.log("second name", secondNameValue);
     firstNameReset();
+    secondNameReset();
+    emailReset();
   };
   return (
     <form onSubmit={submitFormHandler}>
@@ -59,7 +70,16 @@ const BasicForm = (props) => {
       </div>
       <div className="form-control">
         <label htmlFor="name">E-Mail Address</label>
-        <input type="text" id="name" />
+        <input
+          type="text"
+          id="name"
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          value={emailValue}
+        />
+        {emailHasError && (
+          <p className="text-red-500 text-sm">Please enter the correct email</p>
+        )}
       </div>
       <div className="form-actions">
         <button>Submit</button>
