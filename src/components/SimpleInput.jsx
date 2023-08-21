@@ -4,29 +4,31 @@ const SimpleInput = (props) => {
   // in the hook we will happ the function that will be to do validation inside the hook
   // this helps make the hook re-usable for example input
   const [enteredName, setEnteredName] = useState("");
-  // const [i]
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
+  const enteredNameIsValid = enteredName.trim() !== "";
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+
   const inputChangeHandler = (e) => {
-    console.log("i have been called");
     setEnteredName(e.target.value);
+  };
+
+  const nameInputBlurHandler = (e) => {
+    setEnteredNameTouched(true);
   };
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
     setEnteredNameTouched(true);
-    if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
+    if (!enteredNameIsValid) {
       return;
     }
-    setEnteredNameIsValid(true);
 
     console.log("entered name", enteredName);
     // setEnteredNameTouched(true);
     setEnteredName("");
+    setEnteredNameTouched(false);
   };
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
   const nameInputClasses = nameInputIsInvalid
     ? "form-control invalid"
@@ -42,6 +44,7 @@ const SimpleInput = (props) => {
             onChange={inputChangeHandler}
             type="text"
             id="name"
+            onBlur={nameInputBlurHandler}
           />
           {nameInputIsInvalid && (
             <p className="text-red-500 text-sm">Input field cannot be emtpy</p>
